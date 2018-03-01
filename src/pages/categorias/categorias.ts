@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import 'rxjs/add/observable/throw';
 import { Categoria } from '../../model/categoria';
 import { CategoriaService } from './../../services/categoria.service';
+import { CategoriaCadastroPage } from './../categoria-cadastro/categoria-cadastro';
 
 @IonicPage()
 @Component({
@@ -17,7 +18,8 @@ export class CategoriasPage {
 
   public listaCategorias: Categoria[] = [];
   private page = 1;
-
+  public categoriaCadastro = CategoriaCadastroPage;
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,11 +35,10 @@ export class CategoriasPage {
   carregarCategorias() {    
     this.categoriaService.getCategoriasPaginadas(this.page - 1).subscribe(
       data => {
-        this.listaCategorias = data['content'];
+        this.listaCategorias = data['data'];
       },
 
-    );
-    console.log(this.listaCategorias);
+    );    
     
   }
 

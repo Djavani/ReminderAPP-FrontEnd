@@ -11,6 +11,8 @@ import { CategoriasPage } from '../pages/categorias/categorias';
 import { TabsPage } from '../pages/tabs/tabs';
 import { CategoriaService } from './../services/categoria.service';
 import { HttpModule } from '@angular/http';
+import { CategoriaCadastroPage } from '../pages/categoria-cadastro/categoria-cadastro';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { HttpModule } from '@angular/http';
     CategoriasPage,
     LembretesPage,
     LembretePage,
-    TabsPage
+    TabsPage,
+    CategoriaCadastroPage
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { HttpModule } from '@angular/http';
     CategoriasPage,
     LembretePage,
     LembretesPage,
-    TabsPage
+    TabsPage,
+    CategoriaCadastroPage
   ],
   providers: [
     StatusBar,
