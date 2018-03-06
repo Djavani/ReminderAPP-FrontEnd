@@ -5,55 +5,51 @@ import { PathConfig } from '../util/path';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
-import { Categoria } from '../model/categoria';
+import { Lembrete } from "../model/lembrete";
 
 
 @Injectable()
-export class CategoriaService {
-  
-    constructor(public http: Http) {
+export class LembreteService {
+    
+    constructor(public http: Http){
 
     }
-    
-    postCategoria(categoria: Categoria) {
+
+    postLembrete(lembrete: Lembrete) {
         let headers = new Headers({'Content-Type' : 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(PathConfig.apiPath + '/api/categorias', categoria)
+        return this.http.post(PathConfig.apiPath + '/api/lembretes', lembrete)
         .map((response: Response) => response.json())
         .catch(this.handleError);
     }
 
-    editarCategoria(categoria: Categoria) {
+    editarLembrete(lembrete: Lembrete) {
         let headers = new Headers({'Content-Type' : 'application/json'});
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.put(PathConfig.apiPath + '/api/categorias/' + categoria.id, categoria )
-        .map((response: Response) => response.json())
-        .catch(this.handleError);
-    }
-    
-    excluirCategoria(categoria: Categoria) {                
-        return this.http.delete(PathConfig.apiPath + '/api/categorias/' + categoria.id)
+        return this.http.put(PathConfig.apiPath + '/api/lembretes/' + lembrete.id, lembrete )
         .map((response: Response) => response.json())
         .catch(this.handleError);
     }
 
-    getCategoriasPaginadas(page): Observable<Categoria[]> {
-        return this.http.get(PathConfig.apiPath + '/api/categorias?page=' + page + '&sort=descricao')
-            .map((response: Response) => <Categoria[]>response.json())
+    excluirLembrete(lembrete: Lembrete) {                
+        return this.http.delete(PathConfig.apiPath + '/api/lembretes/' + lembrete.id)
+        .map((response: Response) => response.json())
+        .catch(this.handleError);
+    }
+
+    getLembretesPaginadas(page): Observable<Lembrete[]> {
+        return this.http.get(PathConfig.apiPath + '/api/lembretes?page=' + page + '&sort=descricao')
+            .map((response: Response) => <Lembrete[]>response.json())
             .catch(this.handleError);
     }
 
 
-    getCategoriasPaginadasFullText(texto: string) {
-        return this.http.get(PathConfig.apiPath + '/categorias/' + texto + '&sort=score')
+    getLembretesPaginadasFullText(texto: string) {
+        return this.http.get(PathConfig.apiPath + '/lembretes/' + texto + '&sort=score')
             .map((response: Response) => response.json())
             .catch(this.handleError);
-    }
-
-    deleteComentario(categoriaId) {
-        return this.http.delete(PathConfig.apiPath + '/categoria/' + categoriaId);        
     }
 
     private handleError(error: Response) {

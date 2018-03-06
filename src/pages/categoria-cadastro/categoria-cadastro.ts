@@ -1,26 +1,33 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { FormBuilder, Validators } from '@angular/forms';
-
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { Categoria } from '../../model/categoria';
+import { CategoriaService } from './../../services/categoria.service';
 
 @IonicPage()
 @Component({
   selector: 'page-categoria-cadastro',
   templateUrl: 'categoria-cadastro.html',
+  providers: [
+    CategoriaService
+  ]
 })
 export class CategoriaCadastroPage {
-
-  public cadastroCategoriaForm: any;
-  messageDescricao = "";  
-  errorDescricao = false;  
+  
+  public categoria = new Categoria();
+  private formCategoria: FormGroup;
+  messageDescricao = "";
+  errorDescricao = false;
 
   constructor(
+    private categoriaService: CategoriaService,
     public navCtrl: NavController,
     public navParams: NavParams,
-    formBuilder: FormBuilder) {
-    this.cadastroCategoriaForm = formBuilder.group({
+    private formBuilder: FormBuilder,
+    public alertCtrl: AlertController) {
+    this.categoria.descricao = this.navParams.data['categoria'];
+    this.formCategoria = this.formBuilder.group({
       descricao: ['', Validators.required],
-      //password: ['', Validators.compose([Validators.minLength(6), Validators.maxLength(20), Validators.required])],
     });
   }
 
@@ -28,23 +35,27 @@ export class CategoriaCadastroPage {
 
   }
 
-  gravar() {
-    let { descricao } = this.cadastroCategoriaForm.controls;
- 
-    if (!this.cadastroCategoriaForm.valid) {
-      if (!descricao.valid) {
-        this.errorDescricao = true;
-        this.messageDescricao = "Informe uma descricao";
-      } else {
-        this.messageDescricao = "";
-      }
-    }
-    else {
-      //gravar a categoria
-      alert("Categoria Gravada");
-      this.cadastroCategoriaForm.reset();
-    }
+  salvarCategoria() {    
+    this.categoriaService.postCategoria(this.formCategoria.value).subscribe(
+      data => {
+        this.showAlert("Parabéns", "A categoria foi salva!");
+        this.formCategoria.reset();
+      },
+      erro => {
+        let pegaErro = erro['body'].JSON();
+      });
+      this.navCtrl.pop();
   }
+
+  showAlert(title: string, subTitle: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: subTitle,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
+
 
 }
 

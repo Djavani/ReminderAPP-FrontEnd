@@ -7,17 +7,20 @@
 </ion-header>
 
 <ion-content padding class="primary-font">
-  <form padding [formGroup]="cadastroCategoriaForm" (submit)="gravar()" novalidate>
+  <form padding [formGroup]="formCategoria" (submit)="salvarCategoria()">
     <h6 *ngIf="errorDescricao" class="error"> {{messageDescricao}}</h6>
     <ion-item>
-      <ion-input [(ngModel)]="descricao" 
+      <ion-label floating>Descrição</ion-label>
+      <ion-input
         formControlName="descricao" type="text" 
         placeholder="Descricao da Categoria" clearInput
-        clearOnEdit="false">
+        clearOnEdit="true">
       </ion-input>
-    </ion-item>
-    <h6 *ngIf="errorPassword" class="error"> {{messageDescricao}}</h6>
-    <button ion-button block outline color="secondary" class="login-button">Gravar</button>
+    </ion-item>    
+    <button ion-button block color="secondary"
+      [disabled]="!formCategoria.valid"
+      class="login-button">Gravar</button>
+    
   </form>
   <hr>
   <button ion-button navPop block>Voltar</button>

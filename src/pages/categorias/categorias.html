@@ -8,13 +8,16 @@
 
 
 <ion-content padding>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
-    <button ion-item *ngFor="let categoria of listaCategorias" (click)="mostraCategoriaDetalhe(categoria)">
+    <button ion-item *ngFor="let categoria of listaCategorias" (click)="editarCategoria(categoria)">
       {{ categoria?.descricao }}
-    </button>  
+    </button>
   </ion-list>
   <hr>
   <button ion-button block [navPush]="categoriaCadastro">Cadastrar</button>
 </ion-content>
-
-
